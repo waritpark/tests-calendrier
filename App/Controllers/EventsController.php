@@ -12,7 +12,7 @@ class EventsController extends bdd{
      * @param \DateTimeInterface $end
      * @return array
      */
-    public function getEventsBetween (\DateTimeInterface $start,\DateTimeInterface $end): array {
+    public function getEventsBetween (\DateTimeInterface $start,\DateTimeInterface $end) {
         session_start();
         $valueStart = $start->format('Y-m-d 00:00:00');
         $valueEnd = $end->format('Y-m-d 23:59:59');
@@ -21,11 +21,10 @@ class EventsController extends bdd{
         BETWEEN :value_start AND :value_end 
         ORDER BY start_event ASC";
         $result=$this->getBdd()->prepare($req);
-        $result->execute([
+        $result->execute(array(
             "id_user" => $_SESSION['id_utilisateur'],
             "value_start" => $valueStart,
-            "value_end" => $valueEnd
-        ]);
+            "value_end" => $valueEnd));
         $resultrow=$result->fetch(\PDO::FETCH_ASSOC);
         return $resultrow;
     }
@@ -52,7 +51,7 @@ class EventsController extends bdd{
      * @param \DateTimeInterface $end
      * @return array
      */
-    public function getEventsBetweenByDay (\DateTimeInterface $start,\DateTimeInterface $end): array {
+    public function getEventsBetweenByDay (\DateTimeInterface $start,\DateTimeInterface $end) {
         $events = $this->getEventsBetween($start, $end);
         $days = [];
         foreach ($events as $event){
@@ -87,32 +86,32 @@ class EventsController extends bdd{
     /**
      * Créer un evement dans la bdd
      */
-    public function create(EventsController $event) {
-        $statement = $this->getBdd()->prepare('INSERT INTO t_calendrier_events (nom_event, desc_event, start_event, end_event, id_utilisateur) 
-        VALUES (?, ?, ?, ?, ?) ');
-        return $statement->execute([
-            $event->getName(),
-            $event->getDesc(),
-            $event->getStart()->format('Y-m-d H:i:s'),
-            $event->getEnd()->format('Y-m-d H:i:s'),
-            $event->getIdUser()
-        ]);
-    }
+    // public function create(EventsController $event) {
+    //     $statement = $this->getBdd()->prepare('INSERT INTO t_calendrier_events (nom_event, desc_event, start_event, end_event, id_utilisateur) 
+    //     VALUES (?, ?, ?, ?, ?) ');
+    //     return $statement->execute([
+    //         $event->getName(),
+    //         $event->getDesc(),
+    //         $event->getStart()->format('Y-m-d H:i:s'),
+    //         $event->getEnd()->format('Y-m-d H:i:s'),
+    //         $event->getIdUser()
+    //     ]);
+    // }
 
     /**
      * Modifie un événement de la bdd
      */
-    public function update(EventsController $event): bool {
-        $statement = $this->getBdd()->prepare('UPDATE t_calendrier_events 
-        SET nom_event=?, desc_event=?, start_event=?, end_event=? WHERE id_event = ? AND id_utilisateur='.$_SESSION['id_utilisateur'].'');
-        return $statement->execute([
-            $event->getName(),
-            $event->getDesc(),
-            $event->getStart()->format('Y-m-d H:i:s'),
-            $event->getEnd()->format('Y-m-d H:i:s'),
-            $event->getId()
-        ]);
-    }
+    // public function update(EventsController $event): bool {
+    //     $statement = $this->getBdd()->prepare('UPDATE t_calendrier_events 
+    //     SET nom_event=?, desc_event=?, start_event=?, end_event=? WHERE id_event = ? AND id_utilisateur='.$_SESSION['id_utilisateur'].'');
+    //     return $statement->execute([
+    //         $event->getName(),
+    //         $event->getDesc(),
+    //         $event->getStart()->format('Y-m-d H:i:s'),
+    //         $event->getEnd()->format('Y-m-d H:i:s'),
+    //         $event->getId()
+    //     ]);
+    // }
 
     /**
      * Supprime un événement d'une date
