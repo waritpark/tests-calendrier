@@ -21,11 +21,11 @@ class EventsController extends bdd{
         BETWEEN :value_start AND :value_end 
         ORDER BY start_event ASC";
         $result=$this->getBdd()->prepare($req);
-        $result->execute(array(
+        $result->execute([
             "id_user" => $_SESSION['id_utilisateur'],
             "value_start" => $valueStart,
             "value_end" => $valueEnd
-            ));
+        ]);
         $resultrow=$result->fetch(\PDO::FETCH_ASSOC);
         return $resultrow;
     }
