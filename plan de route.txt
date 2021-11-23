@@ -1,0 +1,95 @@
+
+
+            - - - Inscription / Connexion - - - 
+
+Fonctionnalités :
+
+- Connexion :
+    Utilisation de sessions pour reveler les erreurs en PHP et identifier la personne qui se connecte.
+    Modification de mot de passe par mail :
+        1 - Saisir le nom et adresse mail pour recevoir un mail.
+        2 - Recevoir le mail avec un lien qui possède un token + mail de la personne pour modifier le mot de passe.
+        3 - Accéder avec le lien à la page du formulaire de modification de mot de passe qui vérifiera en premier le mail
+        puis le token afin de modifier le mot de passe avec le nouveau entré par l'utilisateur.
+
+- Inscription :
+    Utilisation de session pour reveler les erreurs en PHP.
+    Utilisation de jquery (js à terme) pour afficher une jauge de fiabilité de mot de passe en fonction de sa complexité.
+
+- Dashboard :
+    Utilisation de session pour limiter l'accès en fonction du role.
+
+
+
+
+
+---------- Formulaire d'inscription : ----------
+--- Informations : ---
+
+- mail
+- nom
+- prenom
+- mot de passe
+- répéter le mot de passe
+
+--- Sécurité : ---
+
+Prépare les requêtes SQL.
+
+- Aucun attributs html, toutes les erreurs sont gérées en php.
+
+- Fonctions PHP :
+    - Traite les données avant la requête :
+        stripslashes()
+        trim()
+        htmlspecialchars()
+
+    - Vérifie les données pour faire la requête :
+        isset()
+        empty()
+        strlen()
+
+    - Hacher le mot de passe :
+        password_hash()
+
+    - Vérifie la conformité de l'adresse mail :
+        filter_var()
+    
+
+
+
+---------- Formulaire de connexion : ----------
+
+--- Sécurité : ---
+
+Prépare les requêtes SQL.
+
+- Aucun attributs html, toutes les erreurs sont gérées en php.
+
+!!! Manque actuellement les erreurs relevés avec PHP !!!
+!!! La récupération de mot de passe par mail n'est pas terminé !!!
+
+- Fonctions PHP :
+    - Vérifie les données pour faire la requête :
+        isset()
+        empty()
+        strlen()
+
+    - Vérifie le mot de passe haché :
+        password_verify()
+
+
+---------- Calendrier : ----------
+
+--- fonctionnalités : ---
+
+--- le menu : ---
+- Page 'Mon Calendrier' -> Affiche le mois en cours par semaine (avec les jours grisés s'ils ne font pas parti du mois actuel et le jour actuel d'une autre couleur).
+    Affiche le jour avec tous les événements dans un tableau -> modifier / supprimer / ajouter (le champs 'Date' prend la valeur de la journée actuelle).
+    Utilisation de fonction ternaire php pour le css du Dashboard. Ex : <?= $month->withinMonth($date) ? '' : 'bg-second'; ?>
+    Utilisation de variable php pour le css du Dashboard. Ex : td-month-<?= $month->toStringMonth() ?>
+
+- Page 'Nouvel événement' -> Affiche un formulaire pour créer un événement.
+- Page 'Mon compte' -> permet de modifier les informations de son compte.
+- ADMIN - Page 'statistique' -> Affiche tous les utiliseurs avec leurs informations dans un tableau -> modifier / supprimer (sauf l'admin qui est défini par l'adresse mail).
+
